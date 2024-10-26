@@ -8,7 +8,7 @@
     <meta name="description" content="Cobit 2019" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     {{-- Start Pusher --}}
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    {{-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script> --}}
 
     {{-- @vite('resources/js/app.js') --}}
 

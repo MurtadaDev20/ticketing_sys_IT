@@ -17,7 +17,8 @@
     <link href="{{ URL::asset('assets/css/rtl.css') }}" rel="stylesheet">
 @endif
 
-<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+{{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> --}}
+<script src="{{ URL::asset('assets/js/pusher.min.js') }}"></script>
 @php
     $support_id = Auth::guard('support')->user()->id
 @endphp
@@ -25,8 +26,11 @@
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    var pusher = new Pusher('25086e4ede4683df0acc', {
-        cluster: 'mt1'
+    var pusher = new Pusher('local', {
+        wsHost: '127.0.0.1',
+        wsPort: 6001,
+        forceTLS: false,
+        disableStats: true
     });
 
     var support_id = {{ $support_id }};

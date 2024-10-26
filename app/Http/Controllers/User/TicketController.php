@@ -53,29 +53,29 @@ class TicketController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('upload/ticket'), $imageName);
         } else {
-            $imageName = 'no_image.jpg';
+            $imageName = 'upload/no_image.jpg';
         }
 
         $ticket = Ticket::create([
             'ticket_title' => $request->ticket_title,
             'ticket_desc' => $request->ticket_description,
             'ticket_cat_id' => $request->category,
-            'ticket_image' => $imageName,
             'user_id' => $user_id,
             'status_id'=>'1',
             'degree'=>'0',
         ]);
 
-        if (hasInternetConnection()) {
-            event(new TicketCreated($ticket));
-        } else {
-            Log::warning('No internet connection. Could not dispatch TicketCreated event.');
-        }
+        event(new TicketCreated($ticket));
+        // if (hasInternetConnection()) {
+
+        // } else {
+        //     Log::warning('No internet connection. Could not dispatch TicketCreated event.');
+        // }
 
         toastr()->success('Add Ticket Successfully');
         return  redirect()->route('user.AllTickets');
 
     }
 
-    
+
 }

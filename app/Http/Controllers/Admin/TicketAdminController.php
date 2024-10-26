@@ -37,11 +37,12 @@ class TicketAdminController extends Controller
         $ticket->admin_id = $admin_id;
         $ticket->save();
 
-        if (hasInternetConnection()) {
-            event(new TicketAsginTo($ticket));
-        } else {
-            Log::warning('No internet connection. Could not dispatch TicketCreated event.');
-        }
+        event(new TicketAsginTo($ticket));
+        // if (hasInternetConnection()) {
+
+        // } else {
+        //     Log::warning('No internet connection. Could not dispatch TicketCreated event.');
+        // }
 
         toastr()->success('Ticket assigned successfully!');
         return  redirect()->route('admin.AllTickets');
