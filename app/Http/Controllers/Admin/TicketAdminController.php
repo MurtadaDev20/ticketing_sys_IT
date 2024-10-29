@@ -12,6 +12,8 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Exports\TicketExport;
+use App\Mail\TicketAssigned;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TicketAdminController extends Controller
@@ -37,12 +39,14 @@ class TicketAdminController extends Controller
         $ticket->admin_id = $admin_id;
         $ticket->save();
 
-        event(new TicketAsginTo($ticket));
-        // if (hasInternetConnection()) {
 
-        // } else {
-        //     Log::warning('No internet connection. Could not dispatch TicketCreated event.');
-        // }
+        try {
+            Mail::to($ticket->support->email)->send(new TicketAssigned($ticket));
+        } catch (\Exception $e) {
+            toastr()->error('Failed to send Email');
+        }
+        event(new TicketAsginTo($ticket));
+
 
         toastr()->success('Ticket assigned successfully!');
         return  redirect()->route('admin.AllTickets');

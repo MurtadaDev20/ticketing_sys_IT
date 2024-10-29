@@ -3,9 +3,11 @@
 namespace App\Livewire;
 
 use App\Events\TicketClose;
+use App\Mail\TicketClosed;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -30,13 +32,17 @@ class SupportTicketMonitor extends Component
         $ticket->degree = $category_degree;
         $ticket->save();
 
-        if (hasInternetConnection()) {
-            event(new TicketClose($ticket));
-        } else {
-            Log::warning('No internet connection. Could not dispatch TicketCreated event.');
+        Mail::to($ticket->user->email)->send(new TicketClosed($ticket));
+        try {
+            Mail::to($ticket->user->email)->send(new TicketClosed($ticket));
+        } catch (\Exception $e) {
+            toastr()->error('Failed to send Email');
         }
+        event(new TicketClose($ticket));
+
+
         toastr()->success('Ticket closed successfully!');
-        // Optionally refresh the list of tickets after closure
+
         $this->render();
     }
 

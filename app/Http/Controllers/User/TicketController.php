@@ -4,13 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Events\TicketCreated;
 use App\Http\Controllers\Controller;
+use App\Mail\TicketCreatedMail;
 use App\Models\Catigory;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -64,6 +65,16 @@ class TicketController extends Controller
             'status_id'=>'1',
             'degree'=>'0',
         ]);
+
+        $primaryRecipient = ['murtadait20@gmail.com' , 'murtada.luqman@mansourbank.com'];
+        // $ccRecipients = ['cc1@example.com', 'cc2@example.com'];
+
+        try {
+            Mail::to($primaryRecipient)->send(new TicketCreatedMail($ticket));
+        } catch (\Exception $e) {
+            toastr()->error('Failed to send Email');
+        }
+
 
         event(new TicketCreated($ticket));
         // if (hasInternetConnection()) {
