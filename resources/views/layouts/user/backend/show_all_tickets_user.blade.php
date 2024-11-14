@@ -69,6 +69,7 @@ All Tickets
                       <th>Ticket Title</th>
                       <th>Ticket Description</th>
                       <th>Category</th>
+                      <th>Sub Category</th>
                       <th>Solved by</th>
                       <th>Ticket status</th>
                       <th>Created At</th>
@@ -84,6 +85,7 @@ All Tickets
                             <td>{{$ticket->ticket_title}}</td>
                             <td>{{ Str::limit($ticket->ticket_desc, 20)  }}</td>
                             <td>{{$ticket->catigory->cat_name}}</td>
+                            <td>{{$ticket->subCategory->sub_cat_name}}</td>
 
                             <td>
                                 @if($ticket->support_id == null)

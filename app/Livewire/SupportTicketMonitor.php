@@ -59,7 +59,7 @@ class SupportTicketMonitor extends Component
                           });
                 }
             })
-            ->with('admin', 'catigory', 'status', 'user')
+            ->with('admin', 'catigory', 'status', 'user','subCategory')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 

@@ -25,7 +25,7 @@ class TicketAdminController extends Controller
         $supports =Support::get();
 
         $tickets = Ticket::whereIn('status_id',['1','2'])
-                 ->with('support', 'catigory', 'status','user')
+                 ->with('support', 'catigory', 'status','user','subCategory')
                  ->orderBy('created_at', 'desc')
                  ->paginate(20);
         return view('layouts.admin.backend.monitor_tickets_admin',compact('tickets','supports'));

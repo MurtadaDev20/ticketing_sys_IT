@@ -41,7 +41,7 @@
                                                 <td>{{ $ticket->user->name }}</td>
                                                 <td>{{ $ticket->user->email }}</td>
                                                 <td>{{ $ticket->ticket_title }}</td>
-                                                <td>{{ $ticket->catigory->cat_name }}</td>
+                                                <td>{{ $ticket->catigory->cat_name }} -> {{$ticket->subCategory->sub_cat_name}}</td>
                                                 <td>{{ $ticket->created_at }}</td>
                                                 <td>
                                                     <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal-{{ $ticket->id }}" title="show details">

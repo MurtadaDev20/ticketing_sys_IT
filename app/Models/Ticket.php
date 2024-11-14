@@ -30,4 +30,9 @@ class Ticket extends Model
     public function status(){
         return $this->belongsTo(Status::class, 'status_id','id');
     }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCatigory::class, 'sub_category_id');
+    }
 }

@@ -113,6 +113,7 @@ Route::middleware(['user','UserStatus','UserSecurityPass'])->prefix('/user')->gr
     Route::get('/all-tickets',[TicketController::class,'index'])->name('user.AllTickets');
     Route::get('/add-ticket',[TicketController::class,'addTicket'])->name('user.addTickets');
     Route::post('/add-ticket/store',[TicketController::class,'store'])->name('user.storeTickets');
+    Route::get('/get-sub-categories', [TicketController::class, 'getSubCategories'])->name('user.getSubCategories');
 }); // End middleware User
 
 // Route::get('/pusher', function () {

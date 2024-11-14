@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendTicketEmail;
+use App\Models\SubCatigory;
 
 class TicketController extends Controller
 {
@@ -20,7 +21,7 @@ class TicketController extends Controller
     {
         $user_id = Auth::user()->id;
         $tickets = Ticket::where('user_id', $user_id)
-                 ->with('support', 'catigory', 'status')
+                 ->with('support', 'catigory', 'status','subCategory')
                  ->orderBy('created_at', 'desc')
                  ->paginate(20);
         return view('layouts.user.backend.show_all_tickets_user',compact('tickets'));
@@ -42,6 +43,7 @@ class TicketController extends Controller
             'ticket_title' => 'required|string|max:255',
             'ticket_description' => 'required|string',
             'category' => 'required|exists:catigories,id',
+            'sub_category' => 'required|nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -62,6 +64,7 @@ class TicketController extends Controller
             'ticket_title' => $request->ticket_title,
             'ticket_desc' => $request->ticket_description,
             'ticket_cat_id' => $request->category,
+            'sub_category_id' => $request->sub_category,
             'user_id' => $user_id,
             'status_id'=>'1',
             'degree'=>'0',
@@ -75,11 +78,17 @@ class TicketController extends Controller
 
         SendTicketEmail::dispatch($ticket);
 
-        
+
         toastr()->success('Add Ticket Successfully');
         return  redirect()->route('user.AllTickets');
 
     }
+
+    public function getSubCategories(Request $request)
+{
+    $subCategories = SubCatigory::where('catigory_id', $request->category_id)->get();
+    return response()->json($subCategories);
+}
 
 
 }

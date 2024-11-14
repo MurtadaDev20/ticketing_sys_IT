@@ -39,18 +39,24 @@ Add New Ticket
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label" for="exampleInputEmail1">Category</label>
-                    <select name="category" class="form-control p-2" id="">
-                      <option value="" selected>Choose...</option>
-                      @foreach ($categories as $category)
-                      <option value="{{$category->id}}">{{$category->cat_name}}</option>
-                      @endforeach
-
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-control p-2" id="category">
+                        <option value="" selected>Choose...</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                        @endforeach
                     </select>
                     @error('category') <span class="text-danger">{{ $message }}</span> @enderror
-                  </div>
+                </div>
 
-                
+                <!-- Sub-Category Selection -->
+                <div class="mb-3">
+                    <label class="form-label">Sub-Category</label>
+                    <select name="sub_category" class="form-control p-2" id="sub_category">
+                        <option value="">Choose...</option>
+                    </select>
+                    @error('sub_category') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
 
                 <div class="mb-3">
                   <label class="form-label" for="exampleInputEmail1">Ticket Title</label>
@@ -109,5 +115,27 @@ Add New Ticket
             reader.readAsDataURL(e.target.files['0']);
         })
     })
+</script>
+<script>
+    $(document).ready(function() {
+        $('#category').on('change', function() {
+            var categoryId = $(this).val();
+            if (categoryId) {
+                $.ajax({
+                    url: "{{ route('user.getSubCategories') }}",
+                    type: "GET",
+                    data: { category_id: categoryId },
+                    success: function(data) {
+                        $('#sub_category').empty().append('<option value="">Choose...</option>');
+                        $.each(data, function(key, value) {
+                            $('#sub_category').append('<option value="' + value.id + '">' + value.sub_cat_name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#sub_category').empty().append('<option value="">Choose...</option>');
+            }
+        });
+    });
 </script>
 @endsection
