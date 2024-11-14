@@ -41,6 +41,7 @@
                         </a>
                         <ul id="main-caigory" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{route('admin.showCatigories')}}">Manage Caigory</a></li>
+                            <li><a href="{{route('admin.showSubCatigories')}}">Sub Caigory</a></li>
                         </ul>
                     </li>
 

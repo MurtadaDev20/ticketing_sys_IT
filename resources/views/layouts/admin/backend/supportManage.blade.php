@@ -131,16 +131,16 @@ Supports
                                 @endif
                             </td>
                             <td>
-                            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal" title="Delete"><i
+                            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $support->id }}" title="Delete"><i
                                 class="fa fa-trash" ></i></button>
 
                             <!-- Delete Modal -->
-                             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                             <div class="modal fade" id="deleteModal-{{ $support->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteModalLabel-{{ $support->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Delete User</h5>
+                                    <h5 class="modal-title" id="deleteModalLabel-{{ $support->id }}">Delete User</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

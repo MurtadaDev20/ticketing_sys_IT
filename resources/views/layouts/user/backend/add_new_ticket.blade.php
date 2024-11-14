@@ -37,6 +37,21 @@ Add New Ticket
 
               <form action="{{route('user.storeTickets')}}" method="POST"  enctype="multipart/form-data">
                 @csrf
+
+                <div class="mb-3">
+                    <label class="form-label" for="exampleInputEmail1">Category</label>
+                    <select name="category" class="form-control p-2" id="">
+                      <option value="" selected>Choose...</option>
+                      @foreach ($categories as $category)
+                      <option value="{{$category->id}}">{{$category->cat_name}}</option>
+                      @endforeach
+
+                    </select>
+                    @error('category') <span class="text-danger">{{ $message }}</span> @enderror
+                  </div>
+
+                
+
                 <div class="mb-3">
                   <label class="form-label" for="exampleInputEmail1">Ticket Title</label>
                   <input name="ticket_title" type="text" class="form-control"  value="{{ old('ticket_title') }}" aria-describedby="emailHelp">
@@ -49,17 +64,7 @@ Add New Ticket
                   @error('ticket_description') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="mb-3">
-                  <label class="form-label" for="exampleInputEmail1">Category</label>
-                  <select name="category" class="form-control p-2" id="">
-                    <option value="" selected>Choose...</option>
-                    @foreach ($categories as $category)
-                    <option value="{{$category->id}}">{{$category->cat_name}}</option>
-                    @endforeach
 
-                  </select>
-                  @error('category') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
 
                 <div class="mb-3">
                     <label for="example-text-input" class="form-label">image</label>

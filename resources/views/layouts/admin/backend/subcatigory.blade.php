@@ -35,28 +35,30 @@ Catigories
 
 
 
-              <form action="{{route('admin.addCatigory')}}" method="POST">
+              <form action="{{ route('admin.addSubCategory') }}" method="POST">
                 @csrf
-                <div class="mb-3">
-                  <label class="form-label" for="exampleInputEmail1">Catigory Name</label>
-                  <input name="cat_name" type="text" class="form-control" value="{{ old('cat_name') }}" aria-describedby="emailHelp">
-                  @error('cat_name') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
 
                 <div class="mb-3">
-                  <label class="form-label" for="exampleInputEmail1">Degre</label>
-                  <input name="degre" type="number" class="form-control" aria-describedby="emailHelp">
-                  @error('degre') <span class="text-danger">{{ $message }}</span> @enderror
+                    <label class="form-label" for="exampleInputEmail1">Parent Category</label>
+                    <select name="catigory_id" class="form-control p-2" id="">
+                      <option value="" selected>Choose...</option>
+                      @foreach ($catigories as $category)
+                      <option value="{{$category->id}}">{{$category->cat_name}}</option>
+                      @endforeach
+
+                    </select>
+                    @error('category') <span class="text-danger">{{ $message }}</span> @enderror
+                  </div>
+
+                <div class="mb-3">
+                    <label for="sub_cat_name">Subcategory Name</label>
+                    <input name="sub_cat_name" type="text" class="form-control">
+                    @error('sub_cat_name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-
-                <button  class="btn btn-primary">Add Catigory</button>
-
-
+                <button class="btn btn-primary">Add Subcategory</button>
             </form>
 
-
-            </form>
 
 
 
@@ -94,29 +96,29 @@ Catigories
                   <thead>
                     <tr class="text-dark">
                       <th>#</th>
-                      <th>Catigory Name</th>
-                      <th>Degre</th>
+                      <th>Parent Category</th>
+                      <th>Subcategory Name</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($catigories as $key => $catigory)
+                    @foreach ($subcatigories as $key => $subcatigory)
 
                         <tr>
                             <td>{{$key++}}</td>
-                            <td>{{$catigory->cat_name}}</td>
-                            <td>{{$catigory->cat_grade}}</td>
+                            <td>{{$subcatigory->category->cat_name}}</td>
+                            <td>{{$subcatigory->sub_cat_name}}</td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $catigory->id }}"><i
+                                <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $subcatigory->id }}"><i
                                     class="fa fa-trash"></i></button>
 
                                 <!-- Delete Modal -->
-                                 <div class="modal fade" id="deleteModal-{{ $catigory->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="deleteModalLabel-{{ $catigory->id }}" aria-hidden="true">
+                                 <div class="modal fade" id="deleteModal-{{ $subcatigory->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="deleteModalLabel-{{ $subcatigory->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel-{{ $catigory->id }}">Delete User</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel-{{ $subcatigory->id }}">Delete User</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -126,40 +128,46 @@ Catigories
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <a href="{{ route('admin.destroyCatigory', $catigory->id) }}" class="btn btn-danger color-white" style="color: white">Delete</a>
+                                        <a href="{{ route('admin.destroySubCatigory', $subcatigory->id) }}" class="btn btn-danger color-white" style="color: white">Delete</a>
                                         </div>
                                     </div>
                                     </div>
                                 </div>
 
                                 <!-- Edit Button -->
-                                    <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editModal-{{ $catigory->id }}">
+                                    <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editModal-{{ $subcatigory->id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
 
                                     <!-- Edit Modal -->
-                                    <div class="modal fade" id="editModal-{{ $catigory->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-{{ $catigory->id }}" aria-hidden="true">
+                                    <div class="modal fade" id="editModal-{{ $subcatigory->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-{{ $subcatigory->id }}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel-{{ $catigory->id }}">Edit User</h5>
+                                                    <h5 class="modal-title" id="editModalLabel-{{ $subcatigory->id }}">Edit User</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form action="{{ route('admin.updateCatigory', $catigory->id) }}" method="POST">
+                                                <form action="{{ route('admin.updateSubCatigory', $subcatigory->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT') <!-- Use PUT for updating data -->
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label class="form-label" for="exampleInputEmail1">Catigory Name</label>
-                                                            <input name="cat_name" type="text" class="form-control" value="{{$catigory->cat_name}}" aria-describedby="emailHelp">
-                                                            @error('cat_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                                            <label for="name">Full Name</label>
+                                                            <select name="catigory_id" value="{{$subcatigory->category->cat_name}}" class="form-control p-2" id="">
+                                                                <option value="" selected>Choose...</option>
+                                                                @foreach ($catigories as $category)
+                                                                <option value="{{$category->id}}">{{$category->cat_name}}</option>
+                                                                @endforeach
+
+                                                              </select>
+                                                              @error('category') <span class="text-danger">{{ $message }}</span> @enderror
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="form-label" for="exampleInputEmail1">Degre</label>
-                                                            <input name="degre" type="number" class="form-control" value="{{$catigory->cat_grade}}" aria-describedby="emailHelp">
-                                                            @error('degre') <span class="text-danger">{{ $message }}</span> @enderror
+                                                            <label for="sub_cat_name">Subcategory Name</label>
+                                                            <input name="sub_cat_name" type="text" value="{{$subcatigory->sub_cat_name}}" class="form-control">
+                                                            @error('sub_cat_name') <span class="text-danger">{{ $message }}</span> @enderror
                                                         </div>
 
                                                     </div>

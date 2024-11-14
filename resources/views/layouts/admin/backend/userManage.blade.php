@@ -147,16 +147,16 @@ Users
                                 @endif
                             </td>
                             <td>
-                            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal"><i
+                            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $user->id }}"><i
                                 class="fa fa-trash"></i></button>
 
                             <!-- Delete Modal -->
-                             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                             <div class="modal fade" id="deleteModal-{{ $user->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteModalLabel-{{ $user->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Delete User</h5>
+                                    <h5 class="modal-title" id="deleteModalLabel-{{ $user->id }}">Delete User</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

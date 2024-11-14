@@ -26,9 +26,18 @@ Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admi
 
 Route::middleware('admin')->prefix('/admin')->group(function (){
     Route::get('/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+
     //Catigory
     Route::get('/catigories',[CatigoriesController::class,'showCatigories'])->name('admin.showCatigories');
     Route::post('/catigories/add',[CatigoriesController::class,'addCatigory'])->name('admin.addCatigory');
+    Route::get('/catigories/destroy/{id}',[CatigoriesController::class,'destroyCatigory'])->name('admin.destroyCatigory');
+    Route::put('/catigories/update/{id}', [CatigoriesController::class, 'updateCatigory'])->name('admin.updateCatigory');
+
+    //sub Catigory
+    Route::get('/sub-catigories',[CatigoriesController::class,'showSubCatigories'])->name('admin.showSubCatigories');
+    Route::post('/sub-catigories/add',[CatigoriesController::class,'addSubCategory'])->name('admin.addSubCategory');
+    Route::get('/sub-catigories/destroy/{id}',[CatigoriesController::class,'destroySubCatigory'])->name('admin.destroySubCatigory');
+    Route::put('/sub-catigories/update/{id}', [CatigoriesController::class, 'updateSubCatigory'])->name('admin.updateSubCatigory');
 
     //Supports
     Route::get('/manage/support',[SupportManageController::class,'index'])->name('admin.support');
