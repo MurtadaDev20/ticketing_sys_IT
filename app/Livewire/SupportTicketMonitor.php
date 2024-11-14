@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Jobs\SendTicketClosedEmail;
 
 class SupportTicketMonitor extends Component
 {
@@ -32,14 +33,10 @@ class SupportTicketMonitor extends Component
         $ticket->degree = $category_degree;
         $ticket->save();
 
-        Mail::to($ticket->user->email)->send(new TicketClosed($ticket));
-        try {
-            Mail::to($ticket->user->email)->send(new TicketClosed($ticket));
-        } catch (\Exception $e) {
-            toastr()->error('Failed to send Email');
-        }
-        event(new TicketClose($ticket));
 
+        event(new TicketClose($ticket));
+        // Dispatch the jobs to queue
+        SendTicketClosedEmail::dispatch($ticket);
 
         toastr()->success('Ticket closed successfully!');
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendTicketEmail;
 
 class TicketController extends Controller
 {
@@ -66,23 +67,15 @@ class TicketController extends Controller
             'degree'=>'0',
         ]);
 
-        $primaryRecipient = ['murtadait20@gmail.com' , 'murtada.luqman@mansourbank.com'];
-        // $ccRecipients = ['cc1@example.com', 'cc2@example.com'];
 
-        try {
-            Mail::to($primaryRecipient)->send(new TicketCreatedMail($ticket));
-        } catch (\Exception $e) {
-            toastr()->error('Failed to send Email');
-        }
 
 
         event(new TicketCreated($ticket));
-        // if (hasInternetConnection()) {
+        // Dispatch jobs to queue
 
-        // } else {
-        //     Log::warning('No internet connection. Could not dispatch TicketCreated event.');
-        // }
+        SendTicketEmail::dispatch($ticket);
 
+        
         toastr()->success('Add Ticket Successfully');
         return  redirect()->route('user.AllTickets');
 

@@ -15,6 +15,7 @@ use App\Exports\TicketExport;
 use App\Mail\TicketAssigned;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Jobs\SendTicketAssignmentEmail;
 
 class TicketAdminController extends Controller
 {
@@ -40,13 +41,10 @@ class TicketAdminController extends Controller
         $ticket->save();
 
 
-        try {
-            Mail::to($ticket->support->email)->send(new TicketAssigned($ticket));
-        } catch (\Exception $e) {
-            toastr()->error('Failed to send Email');
-        }
-        event(new TicketAsginTo($ticket));
 
+        event(new TicketAsginTo($ticket));
+        // Dispatch the jobs to queue
+        SendTicketAssignmentEmail::dispatch($ticket);
 
         toastr()->success('Ticket assigned successfully!');
         return  redirect()->route('admin.AllTickets');

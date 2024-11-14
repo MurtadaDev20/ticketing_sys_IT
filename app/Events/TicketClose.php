@@ -37,7 +37,7 @@ class TicketClose implements ShouldBroadcast
 
 
         return [
-            'support_name' => $this->ticket->user->id,
+            'support_name' => $this->ticket->support->name,
         ];
     }
 
