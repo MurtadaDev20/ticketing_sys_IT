@@ -14,7 +14,6 @@
                                 <div class="widget-search ml-0 clearfix">
                                     <input type="text" wire:model.debounce.500ms="search" class="form-control" placeholder="Search by name or email" aria-label="Search">
                                 </div>
-
                             </div>
 
                             <!-- Table -->
@@ -44,15 +43,16 @@
                                                 <td>{{ $ticket->catigory->cat_name }} -> {{$ticket->subCategory->sub_cat_name}}</td>
                                                 <td>{{ $ticket->created_at }}</td>
                                                 <td>
-                                                    <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal-{{ $ticket->id }}" title="show details">
+                                                    <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detailsModal-{{ $ticket->id }}" title="show details">
                                                         <i class="fa fa-eye"></i>
                                                     </button>
-                                                    <!-- Edit Modal -->
-                                                    <div class="modal fade" id="editModal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-{{ $ticket->id }}" aria-hidden="true">
+
+                                                    <!-- Details Modal -->
+                                                    <div class="modal fade" id="detailsModal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel-{{ $ticket->id }}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="editModalLabel-{{ $ticket->id }}">Ticket Details</h5>
+                                                                    <h5 class="modal-title" id="detailsModalLabel-{{ $ticket->id }}">Ticket Details</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
@@ -74,9 +74,37 @@
                                                 </td>
                                                 <td>
                                                     <!-- Close Ticket Button -->
-                                                    <button class="btn btn-outline-info btn-sm" wire:click="closeTicket({{ $ticket->id }})" title="Close Ticket">
+                                                    <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#closeModal-{{ $ticket->id }}">
                                                         <i class="fa fa-check-square"></i>
                                                     </button>
+
+                                                    <!-- Close Ticket Modal -->
+                                                <div class="modal fade" id="closeModal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="closeModalLabel-{{ $ticket->id }}" aria-hidden="true" wire:ignore.self>
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="closeModalLabel-{{ $ticket->id }}">Add Comment</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+
+
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label for="commentText">Comment</label>
+                                                                        <textarea class="form-control" wire:model.defer="commentText" id="commentText" cols="30" rows="5" ></textarea>
+                                                                        @error('commentText') <span class="text-danger">{{ $message }}</span> @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary" wire:click="closeTicket({{ $ticket->id }})" title="Close Ticket" data-dismiss="modal">Save Changes</button>
+                                                                </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -94,4 +122,10 @@
             </div>
         </div>
     </div>
+    <script>
+        Livewire.on('ticketClosed', () => {
+
+            location.reload();
+        });
+    </script>
 </div>

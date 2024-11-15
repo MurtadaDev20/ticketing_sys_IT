@@ -71,6 +71,7 @@ Tickets Complete
                       <th>Ticket Title</th>
                       <th>Category</th>
                       <th>Solved by</th>
+                      <th>Comment</th>
                       <th>Ticket status</th>
                       <th>Degree</th>
                       <th>Created At</th>
@@ -95,6 +96,7 @@ Tickets Complete
                                   {{$ticket->support->name}}
                                 @endif
                             </td>
+                            <td>{{$ticket->comment->comment}}</td>
                             <td>
                             <span class="badge bg-success" style="color: white">{{$ticket->status->name}}</span>
 

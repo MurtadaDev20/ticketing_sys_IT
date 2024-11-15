@@ -35,4 +35,10 @@ class Ticket extends Model
     {
         return $this->belongsTo(SubCatigory::class, 'sub_category_id');
     }
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'comment_id');
+    }
+
 }

@@ -11,36 +11,53 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Jobs\SendTicketClosedEmail;
+use App\Models\Comment;
 
 class SupportTicketMonitor extends Component
 {
     use WithPagination;
 
     public $search = ''; // For search functionality
+
+    public $commentText;
+    protected $rules = [
+        'commentText' => 'required|string|max:500',
+    ];
     protected $listeners = ['asginTo' => 'render'];
     protected $paginationTheme = 'bootstrap';
 
 
+
+
     public function closeTicket($ticket_id)
     {
+        $this->validate();
+
         $ticket = Ticket::findOrFail($ticket_id);
         $category = $ticket->catigory;
         $category_degree = $category->cat_grade;
+
+        $comment = Comment::create([
+            'comment' => $this->commentText,
+        ]);
 
         // Update ticket status and degree
         $ticket->status_id = '3';
         $ticket->close_ticket_at = now();
         $ticket->degree = $category_degree;
+        $ticket->comment_id = $comment->id;
         $ticket->save();
 
+
+
+
+        toastr()->success('Ticket closed successfully!');
+        $this->reset(['commentText']);
+        $this->render();
 
         event(new TicketClose($ticket));
         // Dispatch the jobs to queue
         SendTicketClosedEmail::dispatch($ticket);
-
-        toastr()->success('Ticket closed successfully!');
-
-        $this->render();
     }
 
     public function render()
@@ -59,7 +76,7 @@ class SupportTicketMonitor extends Component
                           });
                 }
             })
-            ->with('admin', 'catigory', 'status', 'user','subCategory')
+            ->with('admin', 'catigory', 'status', 'user','subCategory','comment')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
