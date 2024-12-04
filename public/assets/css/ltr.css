@@ -20178,6 +20178,18 @@ ul.list-unstyled li {
   border-radius: 100%;
   line-height: 5px; }
 
+  .admin-header .nav-link .notification-status1 {
+    position: absolute;
+    top: 6px !important;
+    right: -3% ;
+    /* width: 5px; */
+    /* min-width: 5px; */
+    /* height: 5px; */
+    /* min-height: 5px; */
+    /* padding: 0; */
+    border-radius: 100%;
+    /* line-height: 5px; */
+  }
 .admin-header .dropdown-item {
   font-size: 14px;
   padding: 10px 1.5rem; }

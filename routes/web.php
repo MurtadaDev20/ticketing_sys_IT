@@ -60,6 +60,7 @@ Route::middleware('admin')->prefix('/admin')->group(function (){
     Route::get('/export-tickets',[TicketAdminController::class,'exportData'])->name('admin.exportData');
     Route::get('/assignTo/{ticket_id}/{support_id}',[TicketAdminController::class,'assignTo'])->name('admin.assignTo');
     Route::get('/ticket/destroy/{id}',[TicketAdminController::class,'destroy'])->name('admin.destroyTicket');
+    Route::get('/show-ticket/{ticket}/notify_id/{notify_id}',[TicketAdminController::class,'show'])->name('admin.ShowTickets');
 
     //Evaluation
     Route::get('/show-valuation',[EvaluationController::class,'index'])->name('admin.ShowEvaluation');

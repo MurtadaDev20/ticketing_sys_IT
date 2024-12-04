@@ -84,8 +84,8 @@ All Tickets
                             <td>{{$key++}}</td>
                             <td>{{$ticket->ticket_title}}</td>
                             <td>{{ Str::limit($ticket->ticket_desc, 20)  }}</td>
-                            <td>{{$ticket->catigory->cat_name}}</td>
-                            <td>{{$ticket->subCategory->sub_cat_name}}</td>
+                            <td>{{$ticket->catigory?->cat_name ?? 'null'}}</td>
+                            <td>{{ $ticket->subCategory?->sub_cat_name ?? 'null' }}</td>
 
                             <td>
                                 @if($ticket->support_id == null)

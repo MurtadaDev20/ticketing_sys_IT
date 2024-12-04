@@ -83,4 +83,21 @@ class TicketAdminController extends Controller
         toastr()->success('Delete Ticket Successfully');
         return  redirect()->route('admin.AllTickets');
     }
+
+    public function show(Ticket $ticket, $notify_id)
+    {
+        // Retrieve the authenticated admin
+        $admin = Auth::guard('admin')->user();
+
+        // Find the notification by ID
+        $notification = $admin->notifications()->find($notify_id);
+
+        if ($notification) {
+            // Mark the notification as read
+            $notification->update(['read_at' => now()]);
+        }
+
+        // Return the ticket
+        return $ticket;
+    }
 }

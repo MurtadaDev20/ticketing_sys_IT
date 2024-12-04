@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory ,Notifiable;
     /**
      * The attributes that are mass assignable.
      *

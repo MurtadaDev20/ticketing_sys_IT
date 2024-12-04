@@ -41,7 +41,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ticket->user->name }}</td>
                                             <td>{{ $ticket->ticket_title }}</td>
-                                            <td>{{ $ticket->catigory->cat_name }} -> {{$ticket->subCategory->sub_cat_name}}</td>
+                                            <td>{{ $ticket->catigory->cat_name }} -> {{$ticket->subCategory?->sub_cat_name ?? 'null'}}</td>
                                             <td>
                                                 @if($ticket->support_id == null)
                                                     none

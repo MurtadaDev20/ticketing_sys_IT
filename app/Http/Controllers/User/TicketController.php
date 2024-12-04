@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendTicketEmail;
+use App\Models\Admin;
 use App\Models\SubCatigory;
+use App\Notifications\CreateTicketNotification;
 
 class TicketController extends Controller
 {
@@ -71,7 +73,10 @@ class TicketController extends Controller
         ]);
 
 
-
+        $admins = Admin::get();
+        foreach ($admins as $admin){
+            $admin->notify(new CreateTicketNotification($ticket));
+        }
 
         event(new TicketCreated($ticket));
         // Dispatch jobs to queue

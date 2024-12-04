@@ -29,6 +29,26 @@
         <li class="nav-item fullscreen">
             <a id="btnFullscreen" href="#" class="nav-link"><i class="ti-fullscreen"></i></a>
         </li>
+        <li class="nav-item dropdown ">
+            <a class="nav-link top-nav show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+              <i class="ti-bell"></i>
+              <span class="badge bg-danger notification-status1">{{Auth::guard('admin')->user()->unreadNotifications->count()}} </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-big dropdown-notifications show" data-bs-popper="none">
+              <div class="dropdown-header notifications">
+                <strong>Notifications</strong>
+                <span class="badge bg-warning">{{Auth::guard('admin')->user()->unreadNotifications->count()}}</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              @foreach (Auth::guard('admin')->user()->unreadNotifications as $notification)
+              <a href="{{ url($notification->data['link'] . '/notify_id/' . $notification->id) }}" class="dropdown-item">New Ticket From <strong>{{$notification->data['user_name']}}</strong>
+                <br>
+                <small class="float-end text-muted time">Title : {{$notification->data['ticket_title']}} -- {{$notification->created_at->diffForHumans()}}</small> </a>
+              @endforeach
+
+
+            </div>
+          </li>
 
         <li class="nav-item dropdown mr-30">
             <a class="nav-link nav-pill user-avatar" data-toggle="dropdown" href="#" role="button"
