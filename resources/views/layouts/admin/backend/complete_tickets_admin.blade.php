@@ -61,7 +61,7 @@ Tickets Complete
 
               </div>
               <div class="table-responsive mt-15" >
-                <table class="table center-aligned-table mb-0" id="tableContent">
+                <table class="mb-0 table table-hover" id="tableContent">
 
                   <thead>
                     <tr class="text-dark">
@@ -71,6 +71,7 @@ Tickets Complete
                       <th>Ticket Title</th>
                       <th>Category</th>
                       <th>Solved by</th>
+                      <th>Assign by</th>
                       <th>Comment</th>
                       <th>Ticket status</th>
                       <th>Degree</th>
@@ -95,6 +96,9 @@ Tickets Complete
                                   @else
                                   {{$ticket->support->name}}
                                 @endif
+                            </td>
+                            <td>
+                                {{$ticket->admin?->name ?? 'null'}}
                             </td>
                             <td>{{$ticket->comment->comment}}</td>
                             <td>

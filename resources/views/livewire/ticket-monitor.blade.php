@@ -1,4 +1,9 @@
 <div>
+    <style>
+        #table-responsive {
+            height: 100vh;
+        }
+    </style>
     <div class="page-title">
         <div class="row">
             <div class="col-xl-12 mb-30">
@@ -19,7 +24,7 @@
                         </div>
 
                         <div class="table-responsive mt-15">
-                            <table class="table center-aligned-table mb-0" id="tableContent">
+                            <table class="mb-0 table table-hover" id="tableContent">
                                 <thead>
                                     <tr class="text-dark">
                                         <th>#</th>
@@ -27,6 +32,7 @@
                                         <th>Ticket Title</th>
                                         <th>Category</th>
                                         <th>Solved by</th>
+                                        <th>Assign by</th>
                                         <th>Ticket status</th>
                                         <th>Created At</th>
                                         <th>Closed At</th>
@@ -48,6 +54,9 @@
                                                 @else
                                                     {{ $ticket->support->name }}
                                                 @endif
+                                            </td>
+                                            <td>
+                                                {{$ticket->admin?->name ?? 'null'}}
                                             </td>
                                             <td>
                                                 @if ($ticket->status_id == 1)
@@ -109,24 +118,26 @@
                                             </td>
                                             <td>
 
-                                                    <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal" title="Delete"><i
+                                                    <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $ticket->id }}" title="Delete"><i
                                                         class="fa fa-trash" ></i></button>
 
 
                                                 </td>
                                             <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="deleteModalLabel" aria-hidden="true">
+
+
+                                        <div class="modal fade" id="deleteModal-{{ $ticket->id }}" tabindex="-1" role="dialog"
+                                            aria-labelledby="deleteModalLabel-{{ $ticket->id }}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel">Delete User</h5>
+                                                <h5 class="modal-title" id="deleteModalLabel-{{ $ticket->id }}">Delete User</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                Are you sure you want to delete this ticket?
+                                                Are you sure you want to delete this user?
                                                 </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,5 +1,10 @@
 @extends('layouts.support.master')
 @section('css')
+<style>
+    #table-responsive {
+        height: 100vh;
+    }
+</style>
 @section('title')
 Tickets Complete
 @stop
@@ -48,7 +53,7 @@ Tickets Complete
 
               </div>
               <div class="table-responsive mt-15" >
-                <table class="table center-aligned-table mb-0" id="tableContent">
+                <table class="mb-0 table table-hover" id="tableContent">
 
                   <thead>
                     <tr class="text-dark">

@@ -31,7 +31,8 @@ class EvaluationController extends Controller
             ->with('user', 'catigory', 'status', 'support')
             ->get();
 
-        $sumDegrees = $tickets->sum('degree');
+        // $sumDegrees = $tickets->sum('degree');
+         $sumDegrees = $tickets->count('degree');
         $averageDegree = $tickets->isNotEmpty() ? $tickets->avg('degree') : 0;
 
         // Fetch support name

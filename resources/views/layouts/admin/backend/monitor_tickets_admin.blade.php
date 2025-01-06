@@ -1,5 +1,6 @@
 @extends('layouts.admin.master')
 @section('css')
+
 @livewireStyles
 @section('title')
 All Tickets
