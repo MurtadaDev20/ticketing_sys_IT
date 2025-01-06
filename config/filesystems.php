@@ -36,6 +36,14 @@ return [
             'throw' => false,
         ],
 
+        'd_drive' => [
+      	  	'driver' => 'local',
+        	'root' => 'E:\upload\ticket', // Specify the path to D drive
+        	'url' => env('APP_URL') . '/d_upload', // Optional: Set a custom URL path if needed
+        	'visibility' => 'public',
+        	'throw' => false,
+    	],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -71,6 +79,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('d_upload') => 'E:\upload\ticket', // Link to D drive
     ],
 
 ];
