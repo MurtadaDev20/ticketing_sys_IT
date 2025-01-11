@@ -68,6 +68,7 @@ class TicketController extends Controller
             'ticket_cat_id' => $request->category,
             'sub_category_id' => $request->sub_category,
             'user_id' => $user_id,
+    	    'ticket_image' => $imageName,
             'status_id'=>'1',
             'degree'=>'0',
         ]);
