@@ -30,6 +30,12 @@ class TicketClosed extends Mailable
     public function build()
     {
         return $this->subject('Ticket Closed')
-                    ->view('emails.ticket_closed');
+                    ->view('emails.ticket_closed')
+                    ->with([
+                        'ticketTitle' => $this->ticket->ticket_title,
+                        'CloseTicketBy' => $this->ticket->support->name,
+                        'comment' => $this->ticket->comment->comment,
+                        'closeAt' => $this->ticket->close_ticket_at,
+                    ]);
     }
 }

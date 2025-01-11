@@ -32,17 +32,18 @@
             color: #777;
             text-align: center;
         }
+        .highlight {
+            font-weight: bold;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Your Ticket Has Been Closed</h1>
-        {{-- <p><strong>Title:</strong> {{ $ticket->ticket_title }}</p>
-        <p><strong>Description:</strong> {{ $ticket->ticket_desc }}</p>
-        <p><strong>Closed At:</strong> {{ $ticket->close_ticket_at }}</p>
-        <p><strong>Final Degree:</strong> {{ $ticket->degree }}</p> --}}
+        <h1>Your Ticket  -- {{ $ticketTitle }} --</h1>
+        <p><span class="highlight">Has Been Closed By: </span> {{ $CloseTicketBy }}</p>
+        <p><span class="highlight">Comment: </span> {{ $comment }}</p>
         <p>Thank you for using our support service. If you have any further issues, please feel free to open a new ticket.</p>
-
         <div class="footer">
             <p>Thank you for choosing our service!</p>
         </div>
