@@ -101,4 +101,10 @@ class TicketAdminController extends Controller
         // Return the ticket
         return $ticket;
     }
+
+    public function downloadFile(Ticket $file)
+    {
+        $filePath = storage_path('app/public/' . $file->ticket_image);
+        return response()->download($filePath);
+    }
 }

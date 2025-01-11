@@ -97,8 +97,17 @@
                                                                 <p><b>Ticket Title :</b> {{ $ticket->ticket_title }}</p>
                                                                 <p><b>Ticket Description :</b> {{ $ticket->ticket_desc }}</p>
                                                                 <hr>
-                                                                <label for=""><b>Screenshot</b></label>
-                                                                <img src="{{ !empty($ticket->ticket_image) ? asset('upload/ticket/' . $ticket->ticket_image) : asset('upload/no_image.jpg') }}" class="p-1 bg-black" width="450px" height="450px" alt="Ticket image">
+                                                                <label for=""><b>Attach</b></label>
+                                                                <br>
+
+                                                                @if ($ticket->ticket_image == null)
+                                                                    <span style="color: red">No file attached</span>
+                                                                @else
+                                                                <p style="color: blue">{{basename($ticket->ticket_image)}}</p>
+                                                                <a class="btn btn-outline-success btn-sm"  href="{{route('admin.DownloadFileTickets',$ticket->id)}}" title="Download"> <i class="fa fa-download" title="Download"></i></a>
+                                                                @endif
+
+                                                                {{-- <img src="{{ !empty($ticket->ticket_image) ? url('/storage/'.$ticket->ticket_image) : asset('upload/no_image.jpg') }}" class="p-1 bg-black" width="450px" height="450px" alt="Ticket image"> --}}
                                                             </div>
                                                         </div>
                                                     </div>

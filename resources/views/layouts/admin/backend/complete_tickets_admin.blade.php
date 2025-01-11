@@ -67,16 +67,15 @@ Tickets Complete
                     <tr class="text-dark">
                       <th>#</th>
                       <th>Created By Name</th>
-                      <th>Created By Email</th>
                       <th>Ticket Title</th>
                       <th>Category</th>
                       <th>Solved by</th>
                       <th>Assign by</th>
-                      <th>Comment</th>
                       <th>Ticket status</th>
                       <th>Degree</th>
                       <th>Created At</th>
                       <th>Closed At</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
 
@@ -86,7 +85,6 @@ Tickets Complete
                         <tr>
                             <td>{{$key++}}</td>
                             <td>{{$ticket->user->name}}</td>
-                            <td>{{$ticket->user->email}}</td>
                             <td>{{$ticket->ticket_title}}</td>
                             <td>{{$ticket->catigory->cat_name}}</td>
 
@@ -100,7 +98,7 @@ Tickets Complete
                             <td>
                                 {{$ticket->admin?->name ?? 'null'}}
                             </td>
-                            <td>{{$ticket->comment->comment}}</td>
+
                             <td>
                             <span class="badge bg-success" style="color: white">{{$ticket->status->name}}</span>
 
@@ -114,9 +112,47 @@ Tickets Complete
                                         {{$ticket->close_ticket_at}}
                                 @endif
                                 </td>
+                                <td>
+                                    <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal-{{ $ticket->id }}" title="show details">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <!-- Edit Modal -->
+                                    <div class="modal fade" id="editModal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-{{ $ticket->id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editModalLabel-{{ $ticket->id }}">Ticket Details</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <hr>
+                                                <div class="m-3">
+                                                    <p><b>Created By Name :</b> {{ $ticket->user->name }}</p>
+                                                    <p><b>Created By Email :</b> {{ $ticket->user->email }}</p>
+                                                    <p><b>Ticket Category :</b> {{ $ticket->catigory->cat_name }}</p>
+                                                    <p><b>Ticket Title :</b> {{ $ticket->ticket_title }}</p>
+                                                    <p><b>Ticket Description :</b> {{ $ticket->ticket_desc }}</p>
+                                                    <p><b>Ticket Comment :</b> {{ $ticket->comment->comment }}</p>
+                                                    <hr>
+                                                    <label for=""><b>Attach</b></label>
+                                                    <br>
 
+                                                    @if ($ticket->ticket_image == null)
+                                                        <span style="color: red">No file attached</span>
+                                                    @else
+                                                    <p style="color: blue">{{basename($ticket->ticket_image)}}</p>
+                                                    <a class="btn btn-outline-success btn-sm"  href="{{route('admin.DownloadFileTickets',$ticket->id)}}" title="Download"> <i class="fa fa-download" title="Download"></i></a>
+                                                    @endif
 
+                                                    {{-- <img src="{{ !empty($ticket->ticket_image) ? url('/storage/'.$ticket->ticket_image) : asset('upload/no_image.jpg') }}" class="p-1 bg-black" width="450px" height="450px" alt="Ticket image"> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
 
+                                
                         </tr>
 
                     @endforeach

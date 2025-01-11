@@ -73,13 +73,14 @@ Add New Ticket
 
 
                 <div class="mb-3">
-                    <label for="example-text-input" class="form-label">image</label>
+                    <label for="example-text-input" class="form-label">Attach</label>
                     <input class="form-control" name="image" type="file"  id="image">
+                    @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
 
                     <img id="showImage" src="{{ (!empty($ticketData->ticket_image)) ? url('upload/ticket/'.$ticketData->ticket_image) : url('upload/no_image.jpg') }}" alt="" class="rounded-circle p-1 bg-primary" width="110">
-                </div>
+                </div> --}}
 
 
 

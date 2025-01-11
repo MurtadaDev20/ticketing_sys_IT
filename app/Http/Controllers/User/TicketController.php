@@ -46,7 +46,7 @@ class TicketController extends Controller
             'ticket_description' => 'required|string',
             'category' => 'required|exists:catigories,id',
             'sub_category' => 'required|nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,xlsx,xls,doc,docx,pdf,csv|max:2048',
         ]);
 
         // If validation fails, return back with error messages
@@ -56,10 +56,11 @@ class TicketController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('upload/ticket'), $imageName);
+            $imageName = 'upload/ticket/'.time() . '.' . $image->getClientOriginalExtension();
+            // $image->move(public_path('upload/ticket'), $imageName);
+            $image->storeAs('', $imageName, 'public');
         } else {
-            $imageName = 'upload/no_image.jpg';
+            $imageName = null;
         }
 
         $ticket = Ticket::create([
@@ -68,6 +69,7 @@ class TicketController extends Controller
             'ticket_cat_id' => $request->category,
             'sub_category_id' => $request->sub_category,
             'user_id' => $user_id,
+            'ticket_image' => $imageName,
             'status_id'=>'1',
             'degree'=>'0',
         ]);

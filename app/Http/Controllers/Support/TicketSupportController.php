@@ -36,5 +36,11 @@ class TicketSupportController extends Controller
             return Excel::download(new TicketExport, 'tickets.xlsx');
         }
 
+        public function downloadFile(Ticket $file)
+        {
+            $filePath = storage_path('app/public/' . $file->ticket_image);
+            return response()->download($filePath);
+        }
+
 
 }

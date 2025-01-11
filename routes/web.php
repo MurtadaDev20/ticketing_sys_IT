@@ -61,7 +61,7 @@ Route::middleware('admin')->prefix('/admin')->group(function (){
     Route::get('/assignTo/{ticket_id}/{support_id}',[TicketAdminController::class,'assignTo'])->name('admin.assignTo');
     Route::get('/ticket/destroy/{id}',[TicketAdminController::class,'destroy'])->name('admin.destroyTicket');
     Route::get('/show-ticket/{ticket}/notify_id/{notify_id}',[TicketAdminController::class,'show'])->name('admin.ShowTickets');
-
+    Route::get('/download-fileTicket/{file}',[TicketAdminController::class,'downloadFile'])->name('admin.DownloadFileTickets');
     //Evaluation
     Route::get('/show-valuation',[EvaluationController::class,'index'])->name('admin.ShowEvaluation');
     Route::post('/evaluation',[EvaluationController::class,'evaluation'])->name('admin.Evaluation');
@@ -92,6 +92,7 @@ Route::get('/all-tickets',[TicketSupportController::class,'index'])->name('suppo
 Route::get('/tickets-complete',[TicketSupportController::class,'completeTickets'])->name('support.completeTickets');
 Route::get('/export-tickets',[TicketSupportController::class,'exportData'])->name('support.exportData');
 Route::get('/close-ticket/{ticket_id}',[TicketSupportController::class,'closeTicket'])->name('support.closeTicket');
+Route::get('/download-fileTicket/{file}',[TicketSupportController::class,'downloadFile'])->name('support.DownloadFileTickets');
 
 }); // End middleware Support
 
