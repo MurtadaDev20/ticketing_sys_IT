@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendTicketEmail;
+use App\Jobs\SendTicketEmailToApproved;
 use App\Models\Admin;
+use App\Models\Approval;
 use App\Models\SubCatigory;
+use App\Models\User;
 use App\Notifications\CreateTicketNotification;
 
 class TicketController extends Controller
@@ -62,17 +65,47 @@ class TicketController extends Controller
         } else {
             $imageName = null;
         }
+        $approvals = Approval::where('category_id', $request->category)->get();
+        // create code per ticket
+        $code = "MBI" . date('YmdHis');
+        if ($approvals->count() > 0) {
+            $ticket = Ticket::create([
+                'code' =>$code,
+                'ticket_title' => $request->ticket_title,
+                'ticket_desc' => $request->ticket_description,
+                'ticket_cat_id' => $request->category,
+                'sub_category_id' => $request->sub_category,
+                'user_id' => $user_id,
+                'ticket_image' => $imageName,
+                'status_id'=>'4',
+                'degree'=>'0',
+            ]);
 
-        $ticket = Ticket::create([
-            'ticket_title' => $request->ticket_title,
-            'ticket_desc' => $request->ticket_description,
-            'ticket_cat_id' => $request->category,
-            'sub_category_id' => $request->sub_category,
-            'user_id' => $user_id,
-            'ticket_image' => $imageName,
-            'status_id'=>'1',
-            'degree'=>'0',
-        ]);
+            // Send email to all approvers
+            foreach ($approvals as $approval) {
+                $approver = User::find($approval->user_id);
+                if ($approver) {
+                    SendTicketEmailToApproved::dispatch($ticket, $approver);
+                }
+            }
+        } else {
+
+            $ticket = Ticket::create([
+                'code' =>$code,
+                'ticket_title' => $request->ticket_title,
+                'ticket_desc' => $request->ticket_description,
+                'ticket_cat_id' => $request->category,
+                'sub_category_id' => $request->sub_category,
+                'user_id' => $user_id,
+                'ticket_image' => $imageName,
+                'status_id'=>'1',
+                'degree'=>'0',
+            ]);
+
+            SendTicketEmail::dispatch($ticket);
+        }
+
+
 
 
         $admins = Admin::get();
@@ -83,7 +116,7 @@ class TicketController extends Controller
         event(new TicketCreated($ticket));
         // Dispatch jobs to queue
 
-        SendTicketEmail::dispatch($ticket);
+
 
 
         toastr()->success('Add Ticket Successfully');

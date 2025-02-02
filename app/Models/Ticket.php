@@ -41,4 +41,9 @@ class Ticket extends Model
         return $this->belongsTo(Comment::class, 'comment_id');
     }
 
+    public function approvel()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
 }

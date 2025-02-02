@@ -1,5 +1,8 @@
 <!-- jquery -->
 
+<script >
+
+</script>
 <script src="{{ URL::asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 <!-- plugins-jquery -->
 <script src="{{ URL::asset('assets/js/plugins-jquery.js') }}"></script>
@@ -35,3 +38,10 @@
 {{-- <script scr="{{asset('assets/js/nicescroll/jquery.nicescroll.js')}}"></script> --}}
 <script src="{{ URL::asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{URL::asset('assets/js/bootstrap-datatables/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{URL::asset('assets/js/bootstrap-datatables/jquery.dataTables.min.js')}}"></script>
+<script >
+    $(document).ready(function() {
+        $('#datatable').DataTable();
+    });
+    </script>

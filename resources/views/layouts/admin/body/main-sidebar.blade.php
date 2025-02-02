@@ -46,6 +46,14 @@
                     </li>
 
                     <li>
+                        <a href="{{route('admin.addapproval')}}" >
+                            <div class="pull-left"><i class="fa fa-folder"></i><span
+                                    class="right-nav-text">Workflow Approvals</span></div>
+                            <div class="clearfix"></div>
+                        </a>
+
+                    </li>
+                    <li>
                         <a href="{{route('admin.ShowEvaluation')}}" >
                             <div class="pull-left"><i class="fa fa-folder"></i><span
                                     class="right-nav-text">Evaluation</span></div>

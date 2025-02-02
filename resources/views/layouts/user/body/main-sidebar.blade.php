@@ -26,6 +26,20 @@
                         </a>
 
                     </li>
+                    @php
+                        $approvals = App\Models\Approval::where('user_id',Auth::user()->id);
+                    @endphp
+                    @if ($approvals->count() > 0)
+                    <li>
+                        <a href="{{route('user.allapproval')}}" >
+                            <div class="pull-left"><i class="fa fa-folder"></i><span
+                                    class="right-nav-text">All Approvals</span></div>
+                            <div class="clearfix"></div>
+                        </a>
+
+                    </li>
+                    @endif
+
                     <li>
                         <a href="{{route('user.addTickets')}}" >
                             <div class="pull-left"><i class="fa fa-folder"></i><span

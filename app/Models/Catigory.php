@@ -9,4 +9,9 @@ class Catigory extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function approvers()
+    {
+        return $this->hasMany(Approval::class);
+    }
 }

@@ -28,18 +28,12 @@
                                 <thead>
                                     <tr class="text-dark">
                                         <th>#</th>
-                                        <th>Code</th>
                                         <th>Created By</th>
                                         <th>Ticket Title</th>
                                         <th>Category</th>
-                                        <th>Solved by</th>
-                                        <th>Assign by</th>
-                                        <th>app || Rej By</th>
                                         <th>Ticket status</th>
                                         <th>Created At</th>
-                                        <th>Closed At</th>
                                         <th>Details</th>
-                                        <th>Assign to</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -47,23 +41,9 @@
                                     @foreach ($tickets as $key => $ticket)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $ticket->code }}</td>
                                             <td>{{ $ticket->user->name }}</td>
                                             <td>{{ $ticket->ticket_title }}</td>
                                             <td>{{ $ticket->catigory->cat_name }} -> {{$ticket->subCategory?->sub_cat_name ?? 'null'}}</td>
-                                            <td>
-                                                @if($ticket->support_id == null)
-                                                    none
-                                                @else
-                                                    {{ $ticket->support->name }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{$ticket->admin?->name ?? 'null'}}
-                                            </td>
-                                            <td>
-                                                {{$ticket->approvel?->name ?? 'null'}}
-                                            </td>
                                             <td>
                                                 @if ($ticket->status_id == 1)
                                                     <span class="badge bg-danger" style="color: white">{{ $ticket->status->name }}</span>
@@ -79,13 +59,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ $ticket->created_at }}</td>
-                                            <td>
-                                                @if ($ticket->close_ticket_at == null)
-                                                    <span style="color: red">Ticket Open</span>
-                                                @else
-                                                    {{ $ticket->close_ticket_at }}
-                                                @endif
-                                            </td>
+
                                             <td>
                                                 <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal-{{ $ticket->id }}" title="show details">
                                                     <i class="fa fa-eye"></i>
@@ -124,56 +98,40 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center">
-                                                @if ($ticket->status_id == 4 or $ticket->status_id == 6)
+                                            <td >
+                                                <button wire:click="approvedTicket({{$ticket->id}})"
+                                                    class="btn btn-outline-success btn-sm" title="Approve"><i class="fa fa-thumbs-up"></i>
+                                                </button>
+                                                <!-- Reject Ticket Button -->
+                                                    <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#rejectModal-{{ $ticket->id }}">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
 
-                                                <span class="text-center mr-4" style="color: red ">N/A</span>
-
-                                                @else
-                                                <div class="col-sm-3 position-relative">
-                                                    <div class="btn-group info-drop info-drop-box xs-mt-10">
-                                                        <button type="button" class="dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-more-alt"></i></button>
-                                                        <div class="dropdown-menu">
-                                                            @foreach ($supports as $support)
-                                                                <a class="dropdown-item" href="{{ route('admin.assignTo', [$ticket->id, $support->id]) }}">{{ $support->name }}</a>
-                                                            @endforeach
+                                                    <!-- Reject Ticket Modal -->
+                                                    <div class="modal fade" id="rejectModal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel-{{ $ticket->id }}" aria-hidden="true" wire:ignore.self>
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="rejectModalLabel-{{ $ticket->id }}">Reject Ticket</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label for="commentText">Reason for Rejection</label>
+                                                                        <textarea class="form-control" wire:model.defer="commentText" id="commentText" cols="30" rows="5" required></textarea>
+                                                                        @error('commentText') <span class="text-danger">{{ $message }}</span> @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" class="btn btn-danger" wire:click="rejectTicket({{ $ticket->id }})" title="Reject Ticket" data-dismiss="modal">Reject</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                @endif
-
                                             </td>
-
-                                            <td>
-
-                                                    <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $ticket->id }}" title="Delete"><i
-                                                        class="fa fa-trash" ></i></button>
-
-
-                                                </td>
-                                            <!-- Delete Modal -->
-
-
-                                        <div class="modal fade" id="deleteModal-{{ $ticket->id }}" tabindex="-1" role="dialog"
-                                            aria-labelledby="deleteModalLabel-{{ $ticket->id }}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel-{{ $ticket->id }}">Delete User</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                Are you sure you want to delete this user?
-                                                </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <a href="{{ route('admin.destroyTicket', $ticket->id) }}" class="btn btn-danger color-white" style="color: white">Delete</a>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
                                         </tr>
                                     @endforeach
                                 </tbody>

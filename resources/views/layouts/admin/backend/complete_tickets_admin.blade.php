@@ -66,6 +66,7 @@ Tickets Complete
                   <thead>
                     <tr class="text-dark">
                       <th>#</th>
+                      <th>Code</th>
                       <th>Created By Name</th>
                       <th>Ticket Title</th>
                       <th>Category</th>
@@ -84,6 +85,7 @@ Tickets Complete
 
                         <tr>
                             <td>{{$key++}}</td>
+                            <td>{{ $ticket->code }}</td>
                             <td>{{$ticket->user->name}}</td>
                             <td>{{$ticket->ticket_title}}</td>
                             <td>{{$ticket->catigory->cat_name}}</td>
@@ -152,7 +154,7 @@ Tickets Complete
                                     </div>
                                 </td>
 
-                                
+
                         </tr>
 
                     @endforeach

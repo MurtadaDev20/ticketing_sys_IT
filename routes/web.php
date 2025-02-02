@@ -65,6 +65,9 @@ Route::middleware('admin')->prefix('/admin')->group(function (){
     //Evaluation
     Route::get('/show-valuation',[EvaluationController::class,'index'])->name('admin.ShowEvaluation');
     Route::post('/evaluation',[EvaluationController::class,'evaluation'])->name('admin.Evaluation');
+
+    //approve
+    Route::get('/add-approve', function () {return view('layouts.admin.backend.approval');})->name('admin.addapproval');
 }); // End middleware Admin
 
 
@@ -117,6 +120,8 @@ Route::middleware(['user','UserStatus','UserSecurityPass'])->prefix('/user')->gr
     Route::get('/add-ticket',[TicketController::class,'addTicket'])->name('user.addTickets');
     Route::post('/add-ticket/store',[TicketController::class,'store'])->name('user.storeTickets');
     Route::get('/get-sub-categories', [TicketController::class, 'getSubCategories'])->name('user.getSubCategories');
+
+    Route::get('/all-approvel', function () {return view('layouts.user.backend.approval-user');})->name('user.allapproval');
 }); // End middleware User
 
 // Route::get('/pusher', function () {

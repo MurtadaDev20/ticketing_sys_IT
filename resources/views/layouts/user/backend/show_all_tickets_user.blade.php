@@ -5,6 +5,7 @@
         height: 100vh;
     }
 </style>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
 @section('title')
 All Tickets
 @stop
@@ -47,26 +48,12 @@ All Tickets
                 </div>
 
 
-
-
-                    {{-- <Label class="m-3 fs-3">Search : </Label>
-                                <div class="widget-search ml-0 clearfix">
-                                    <form action="{{ route('admin.user') }}" method="GET" class="mb-3">
-                                        <div class="input-group">
-                                            <input type="text" name="search" class="form-control" value="{{$search}}" placeholder="Search by name or email" aria-label="Search">
-                                            <button class="btn btn-primary" type="submit">Search</button>
-                                        </div>
-                                    </form>
-                                </div> --}}
-
-
-
                 </div>
 
 
               </div>
               <div class="table-responsive mt-15" style=" height: 100vh;">
-                <table class="table center-aligned-table mb-0" id="tableContent">
+                <table class="table center-aligned-table mb-0" id="datatable">
 
                   <thead>
                     <tr class="text-dark">
@@ -76,6 +63,7 @@ All Tickets
                       <th>Category</th>
                       <th>Sub Category</th>
                       <th>Solved by</th>
+                      <th>app || Rej By</th>
                       <th>Ticket status</th>
                       <th>Created At</th>
                       <th>Closed At</th>
@@ -100,13 +88,21 @@ All Tickets
                                 @endif
                             </td>
                             <td>
-                            @if ($ticket->status_id == 1)
-                            <span class="badge bg-danger" style="color: white">{{$ticket->status->name}}</span>
-                            @elseif ($ticket->status_id == 2)
-                            <span class="badge bg-info" style="color: white">{{$ticket->status->name}}</span>
-                            @else
-                            <span class="badge bg-success" style="color: white">{{$ticket->status->name}}</span>
-                            @endif
+                                {{$ticket->approvel?->name ?? 'N\A'}}
+                            </td>
+                            <td>
+                                @if ($ticket->status_id == 1)
+                                    <span class="badge bg-danger" style="color: white">{{ $ticket->status->name }}</span>
+                                @elseif ($ticket->status_id == 2)
+                                    <span class="badge bg-info" style="color: white">{{ $ticket->status->name }}</span>
+                                @elseif ($ticket->status_id == 4)
+                                    <span class="badge bg-warning " style="color: white">{{ $ticket->status->name }}</span>
+
+                                @elseif ($ticket->status_id == 6)
+                                    <span class="badge bg-danger " style="color: white">{{ $ticket->status->name }}</span>
+                                @else
+                                    <span class="badge bg-success" style="color: white">{{ $ticket->status->name }}</span>
+                                @endif
                             </td>
                             <td>{{$ticket->created_at}}</td>
                             <td>
@@ -139,7 +135,11 @@ All Tickets
 
 
       </div>
-
+      {{-- <script >
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
+        </script> --}}
 
 <!-- row closed -->
 @endsection

@@ -18,7 +18,7 @@ class TicketMonitor extends Component
         $supports = Support::all();
 
         // Fetch tickets with pagination and searching
-        $tickets = Ticket::whereIn('status_id', ['1', '2'])
+        $tickets = Ticket::whereIn('status_id', ['1', '2' ,'4','5','6'])
             ->with('support', 'catigory', 'status', 'user')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
