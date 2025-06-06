@@ -54,6 +54,14 @@
 
                     </li>
                     <li>
+                        <a href="{{route('admin.surveyAllowUser')}}" >
+                            <div class="pull-left"><i class="fa fa-folder"></i><span
+                                    class="right-nav-text">Workflow Users Survey</span></div>
+                            <div class="clearfix"></div>
+                        </a>
+
+                    </li>
+                    <li>
                         <a href="{{route('admin.ShowEvaluation')}}" >
                             <div class="pull-left"><i class="fa fa-folder"></i><span
                                     class="right-nav-text">Evaluation</span></div>

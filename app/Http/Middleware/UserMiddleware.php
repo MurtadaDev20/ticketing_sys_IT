@@ -16,10 +16,11 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check()) {
-            toastr()->error('you do not have a permission to access this page');
-            return redirect()->route('user.login');
+            if (!Auth::guard('web')->check()) {
+            toastr()->error('You do not have permission to access this page');
+            return redirect()->guest(route('user.login'));
         }
+
         return $next($request);
     }
 }

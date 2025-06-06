@@ -10,6 +10,7 @@ use App\Http\Controllers\Support\TicketSupportController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\User\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Survey;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -68,6 +69,9 @@ Route::middleware('admin')->prefix('/admin')->group(function (){
 
     //approve
     Route::get('/add-approve', function () {return view('layouts.admin.backend.approval');})->name('admin.addapproval');
+
+    // Survey
+    Route::get('/survey-allow-user', function () {return view('layouts.admin.backend.surveyAlowUser');})->name('admin.surveyAllowUser');
 }); // End middleware Admin
 
 
@@ -122,11 +126,33 @@ Route::middleware(['user','UserStatus','UserSecurityPass'])->prefix('/user')->gr
     Route::get('/get-sub-categories', [TicketController::class, 'getSubCategories'])->name('user.getSubCategories');
 
     Route::get('/all-approvel', function () {return view('layouts.user.backend.approval-user');})->name('user.allapproval');
-}); // End middleware User
 
-// Route::get('/pusher', function () {
-//     return view('empty');
-// });
+    //Survay
+    Route::get('/survey-manage-admin', function () {return view('layouts.user.backend.surveyManage');})->name('user.surveyManageAdmin');
+
+   Route::get('/survey/{survey}/questions', function (Survey $survey) {
+    return view('layouts.user.backend.survey-question-manager', compact('survey'));
+    })->name('user.survey.questions');
+
+    Route::get('/survey-view-user', function () {return view('layouts.user.backend.survey-view-uesr');})->name('user.surveyViewUser');
+
+    Route::get('/survey/{survey}/fill', function (Survey $survey) {
+    return view('layouts.user.backend.survey-taker', compact('survey'));
+    })->name('survey.fill');
+
+
+    Route::get('/survey/{survey}/responses', function (Survey $survey) {
+    return view('layouts.user.backend.show-survey-responses', compact('survey'));
+    })->name('survey.responses');
+
+    Route::get('/survey/{survey}/statistics', function (Survey $survey) {
+    return view('layouts.user.backend.survey-statistics', compact('survey'));
+    })->name('survey.statistics');
+
+    Route::get('/survey/thank-you', function () {
+    return view('layouts.user.backend.thank-you');
+    })->name('survey.thank-you');
+}); 
 
 
 

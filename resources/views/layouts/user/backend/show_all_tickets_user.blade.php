@@ -53,7 +53,7 @@ All Tickets
 
               </div>
               <div class="table-responsive mt-15" style=" height: 100vh;">
-                <table class="table center-aligned-table mb-0" id="datatable">
+                <table class="table center-aligned-table mb-0" id="">
 
                   <thead>
                     <tr class="text-dark">

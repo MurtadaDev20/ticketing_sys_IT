@@ -26,34 +26,28 @@ class UserController extends Controller
 
     // End method
 
-    public function userloginSubmit(Request $request){
-
+    public function userloginSubmit(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        $check = $request->all();
+        $credentials = $request->only('email', 'password');
 
-        $data = [
-            'email' => $check['email'],
-            'password' => $check['password']
-        ];
+        if (Auth::guard('web')->attempt($credentials)) {
+            $request->session()->regenerate();
 
-        if (Auth::attempt($data)) {
-            if(Auth::user()->security_pass == 0)
-                    {
-                        return redirect()->route('user.securityPasswordView');
-                    }
-            return redirect()->route('user.main');
+            if (Auth::guard('web')->user()->security_pass == 0) {
+                return redirect()->route('user.securityPasswordView');
+            }
 
-        }else{
-            toastr()->error('Invalide Creadentials');
-            return redirect()->route('user.login');
-
-        }
-    }
-
+            return redirect()->intended(route('user.main'));
+        } else {
+                    toastr()->error('Invalid Credentials');
+                    return redirect()->route('user.login');
+                }
+            }
     // End method
 
     public function securityPasswordView()
