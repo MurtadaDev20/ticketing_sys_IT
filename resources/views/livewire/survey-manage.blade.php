@@ -290,7 +290,7 @@
                                             <div class="card-footer bg-white border-top-0">
                                                 <div class="d-flex justify-content-between">
                                                     <a href="{{ route('user.survey.questions', $survey->id) }}" class="btn btn-outline-primary btn-sm">
-                                                        <i class="fa fa-cog me-1"></i>Manage Questions
+                                                        <i class="fa fa-cog me-1"></i> Manage Questions
                                                     </a>
                                                     <a href="{{ route('survey.responses', $survey->id) }}" class="btn btn-outline-success btn-sm">
                                                         <i class="fa fa-chart-bar me-1"></i>View Responses

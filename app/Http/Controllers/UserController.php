@@ -47,7 +47,7 @@ class UserController extends Controller
                     toastr()->error('Invalid Credentials');
                     return redirect()->route('user.login');
                 }
-            }
+    }
     // End method
 
     public function securityPasswordView()

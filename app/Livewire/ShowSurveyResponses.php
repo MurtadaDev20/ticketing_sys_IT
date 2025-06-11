@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ShowSurveyResponses extends Component
 {
+   
     use WithPagination;
 
     public $survey;
@@ -35,6 +36,7 @@ class ShowSurveyResponses extends Component
 
     public function exportData()
     {
+         sleep(1);
         $random = time();
         return Excel::download(new AnswersSurveyExport($this->survey->id), 'Survey-Responses-'. $random .'.xlsx');
     }

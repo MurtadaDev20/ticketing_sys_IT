@@ -171,12 +171,17 @@
                     
                     <i class="fa fa-users me-1"></i>
                     {{ $responses->total() }} Responses - 
-                    <button wire:click.prevent='showStatistics' class="btn btn-outline-info btn-sm">
+                    <button wire:loading.class='btn btn-secondary'  wire:loading.attr="disabled" wire:click.prevent='showStatistics' class="btn btn-outline-info btn-sm">
                         <i class="fa fa-chart-bar me-1"></i> Statistics
                     </button>
-                        <button wire:click.prevent='exportData' class="btn btn-outline-primary btn-sm">
-                            <i class="fa fa-download me-1"></i> Export
-                        </button>
+                            <button wire:click.prevent='exportData' class="btn btn-outline-primary btn-sm" wire:loading.attr="disabled">
+                                <i class="fa fa-download me-1"></i> Export
+                            </button>
+
+                            <!-- Loading Spinner -->
+                            <div wire:loading wire:target="exportData" class="mt-2 text-primary">
+                                <i class="fa fa-spinner fa-spin me-1"></i> Exporting responses...
+                            </div>
                         @if ($survey->status == true)
                         <button wire:click.prevent='closeSurvey' class="btn btn-outline-danger btn-sm">
                             <i class="fa fa-close me-1"></i> Close
@@ -200,7 +205,7 @@
                         <thead>
                             <tr class="bg-light">
                                 <th class="text-center" style="width: 50px">#</th>
-                                <th style="width: 50px">Date</th>
+                                <th style="width: 120px">Date</th>
                                 @foreach($survey->questions as $question)
                                     <th>{{ $question->question_text }}</th>
                                 @endforeach
