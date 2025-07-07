@@ -44,7 +44,7 @@
                             <li><a href="{{route('admin.showSubCatigories')}}">Sub Category</a></li>
                         </ul>
                     </li>
-
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">Workflow </li>
                     <li>
                         <a href="{{route('admin.addapproval')}}" >
                             <div class="pull-left"><i class="fa fa-folder"></i><span
@@ -57,6 +57,14 @@
                         <a href="{{route('admin.surveyAllowUser')}}" >
                             <div class="pull-left"><i class="fa fa-folder"></i><span
                                     class="right-nav-text">Workflow Users Survey</span></div>
+                            <div class="clearfix"></div>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="{{route('admin.ReportUser')}}" >
+                            <div class="pull-left"><i class="fa fa-folder"></i><span
+                                    class="right-nav-text">Workflow Users Report</span></div>
                             <div class="clearfix"></div>
                         </a>
 

@@ -72,6 +72,9 @@ Route::middleware('admin')->prefix('/admin')->group(function (){
 
     // Survey
     Route::get('/survey-allow-user', function () {return view('layouts.admin.backend.surveyAlowUser');})->name('admin.surveyAllowUser');
+
+    //Report MIS
+    Route::get('/report-user', function () {return view('layouts.admin.backend.report.reportUser');})->name('admin.ReportUser');
 }); // End middleware Admin
 
 
@@ -152,7 +155,16 @@ Route::middleware(['user','UserStatus','UserSecurityPass'])->prefix('/user')->gr
     Route::get('/survey/thank-you', function () {
     return view('layouts.user.backend.thank-you');
     })->name('survey.thank-you');
-}); 
+
+    // Report
+    Route::get('/report-creator', function () {return view('layouts.user.backend.report.reportCreator');})->name('user.reportCreator');
+    Route::get('/report-show-creator', function () {return view('layouts.user.backend.report.reportShowCreator');})->name('user.reportShowCreator');
+    Route::get('/report-show-Admin', function () {return view('layouts.user.backend.report.reportShowAdmin');})->name('user.reportShowAdmin');
 
 
+
+
+
+
+});
 

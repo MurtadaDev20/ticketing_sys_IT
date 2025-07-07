@@ -26,10 +26,10 @@ class TicketController extends Controller
     {
         $user_id = Auth::user()->id;
         $tickets = Ticket::where('user_id', $user_id)
-                 ->with('support', 'catigory', 'status','subCategory')
-                 ->orderBy('created_at', 'desc')
-                 ->paginate(20);
-        return view('layouts.user.backend.show_all_tickets_user',compact('tickets'));
+            ->with('support', 'catigory', 'status', 'subCategory')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        return view('layouts.user.backend.show_all_tickets_user', compact('tickets'));
     }
 
     public function addTicket()
@@ -37,7 +37,7 @@ class TicketController extends Controller
         $user_id = Auth::user()->id;
         $categories = Catigory::get();
         $ticketData = Ticket::where('user_id', $user_id);
-        return view('layouts.user.backend.add_new_ticket',compact('ticketData','categories'));
+        return view('layouts.user.backend.add_new_ticket', compact('ticketData', 'categories'));
     }
 
     public function store(Request $request)
@@ -59,7 +59,7 @@ class TicketController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = 'upload/ticket/'.time() . '.' . $image->getClientOriginalExtension();
+            $imageName = 'upload/ticket/' . time() . '.' . $image->getClientOriginalExtension();
             // $image->move(public_path('upload/ticket'), $imageName);
             $image->storeAs('', $imageName, 'public');
         } else {
@@ -70,15 +70,15 @@ class TicketController extends Controller
         $code = "MBI" . date('YmdHis');
         if ($approvals->count() > 0) {
             $ticket = Ticket::create([
-                'code' =>$code,
+                'code' => $code,
                 'ticket_title' => $request->ticket_title,
                 'ticket_desc' => $request->ticket_description,
                 'ticket_cat_id' => $request->category,
                 'sub_category_id' => $request->sub_category,
                 'user_id' => $user_id,
                 'ticket_image' => $imageName,
-                'status_id'=>'4',
-                'degree'=>'0',
+                'status_id' => '4',
+                'degree' => '0',
             ]);
 
             // Send email to all approvers
@@ -91,15 +91,15 @@ class TicketController extends Controller
         } else {
 
             $ticket = Ticket::create([
-                'code' =>$code,
+                'code' => $code,
                 'ticket_title' => $request->ticket_title,
                 'ticket_desc' => $request->ticket_description,
                 'ticket_cat_id' => $request->category,
                 'sub_category_id' => $request->sub_category,
                 'user_id' => $user_id,
                 'ticket_image' => $imageName,
-                'status_id'=>'1',
-                'degree'=>'0',
+                'status_id' => '1',
+                'degree' => '0',
             ]);
 
             SendTicketEmail::dispatch($ticket);
@@ -109,7 +109,7 @@ class TicketController extends Controller
 
 
         $admins = Admin::get();
-        foreach ($admins as $admin){
+        foreach ($admins as $admin) {
             $admin->notify(new CreateTicketNotification($ticket));
         }
 
@@ -121,14 +121,11 @@ class TicketController extends Controller
 
         toastr()->success('Add Ticket Successfully');
         return  redirect()->route('user.AllTickets');
-
     }
 
     public function getSubCategories(Request $request)
-{
-    $subCategories = SubCatigory::where('catigory_id', $request->category_id)->get();
-    return response()->json($subCategories);
-}
-
-
+    {
+        $subCategories = SubCatigory::where('catigory_id', $request->category_id)->get();
+        return response()->json($subCategories);
+    }
 }

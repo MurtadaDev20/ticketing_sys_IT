@@ -1,74 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Ticket Created</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .email-container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #4CAF50;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        .highlight {
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777;
-            text-align: center;
-        }
-        .image-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .marg {
-            margin: 10px;
-        }
-        img {
-            max-width: 150px; /* Adjust as needed */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>New Ticket Created for Approval</title>
 </head>
-<body>
-    <div class="marg">
-        <div class="image-container">
-            Al-Mansour Bank
-        </div>
-        <div class="email-container">
-            <h1>New Ticket Created by {{ $ticketUser }} - Kindly Review for Approval</h1>
-            <p><span class="highlight">Title:</span> {{ $ticketTitle }}</p>
-            <p><span class="highlight">Description:</span> {{ $ticketDescription }}</p>
-            <p><span class="highlight">Category:</span> {{ $ticketCategory }}</p>
-            <p><span class="highlight">Sub Category:</span> {{ $ticketSubCategory }}</p>
-            <p><span class="highlight">Created At:</span> {{ $created_at }}</p>
-            <p>You have a new ticket from <span class="highlight">{{ $ticketUser }}</span></p>
+<body style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px; color: #333;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <tr>
+            <td style="padding: 20px; background-color: #2196F3; color: #ffffff; text-align: center; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                <h2>📩 New Ticket Created</h2>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <p>Hello,</p>
+                <p>A new ticket has been submitted by <strong>{{ $ticketUser }}</strong>. Please review the details for approval:</p>
 
-            <div class="footer">
-                <p>Thank you for using our support service.</p>
-            </div>
-            <a href="{{URL(route('user.AllTickets'))}}">Go Now</a>
-        </div>
-    </div>
+                <table width="100%" cellpadding="8" cellspacing="0" style="font-size: 14px;">
+                    <tr>
+                        <td><strong>Title:</strong></td>
+                        <td>{{ $ticketTitle }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Description:</strong></td>
+                        <td>{{ $ticketDescription }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Category:</strong></td>
+                        <td>{{ $ticketCategory }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sub Category:</strong></td>
+                        <td>{{ $ticketSubCategory }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Created At:</strong></td>
+                        <td>{{ $created_at }}</td>
+                    </tr>
+                </table>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="{{ URL(route('user.AllTickets')) }}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                        🔍 View Ticket
+                    </a>
+                </div>
+
+                <p style="margin-top: 30px;">Best regards,<br><strong>IT Support Team</strong></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 15px; text-align: center; font-size: 12px; color: #777; background-color: #f1f1f1; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                &copy; {{ date('Y') }} Al-Mansour Bank. All rights reserved.
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

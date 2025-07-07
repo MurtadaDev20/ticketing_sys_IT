@@ -213,6 +213,43 @@
                     </li>
 
                     @php
+                        $survays = App\Models\ReportUser::where('user_id',Auth::user()->id)->first();
+                        
+                    @endphp
+                    @if ($survays->status == 1)
+                    <li class="menu-title">Reports</li>
+                    <li>
+                        <a href="{{route('user.reportShowCreator')}}">
+                            <div class="pull-left">
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="right-nav-text">Show All Reports</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{route('user.reportCreator')}}">
+                            <div class="pull-left">
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="right-nav-text">Add New Report</span>
+                            </div>
+                        </a>
+                    </li>
+                    @else
+                    <li class="menu-title">Reports</li>
+                    <li>
+                        <a href="{{route('user.reportShowAdmin')}}">
+                            <div class="pull-left">
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="right-nav-text">Show All Reports</span>
+                            </div>
+                        </a>
+                    </li>
+                    @endif
+
+
+                    <li class="menu-title">Surveys</li>
+                    @php
                         $survays = App\Models\SurveyAllowUser::where('user_id',Auth::user()->id);
                     @endphp
                     @if ($survays->count() > 0)
