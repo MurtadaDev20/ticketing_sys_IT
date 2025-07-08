@@ -118,9 +118,9 @@
                                                 @else 
                                                 @foreach ($report->attaches as $attach)
                                                     <p style="color: blue">{{basename($attach->file)}}</p>
-                                                    <a class="btn btn-outline-success btn-sm" href="#" title="Download"> <i class="fa fa-download" title="Download"></i></a>
-                                                    <img src="{{ !empty($attach->file) ? url('/storage/'.$attach->file) : asset('upload/no_image.jpg') }}" class="p-1 bg-black" width="450px" height="450px" alt="Ticket image">
                                                 @endforeach
+                                                
+                                                    <a class="btn btn-outline-success btn-sm" wire:click='downloadAllFiles({{ $attach->id }})' title="Download"> <i class="fa fa-download" title="Download"></i></a>
                                                 @endif
 
                                                 
