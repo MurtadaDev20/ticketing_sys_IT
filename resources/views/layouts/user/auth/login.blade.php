@@ -67,7 +67,29 @@
     </div>
     </div>
   </section>
+ @include('layouts.user.body.footer')
 
+            @php
+                // Get session lifetime from config (in minutes)
+                $sessionLifetime = config('session.lifetime', 120);
+            @endphp
+
+            <script>
+                const sessionLifetimeMinutes = {{ $sessionLifetime }};
+                const sessionTimeoutMs = sessionLifetimeMinutes * 60 * 1000;
+                const warningBeforeMs = 29 * 60 * 1000; // Warn 1 minute before timeout
+
+                // ⚠️ Warn user before session timeout
+                setTimeout(() => {
+                    alert("⚠️ Your session will expire in 1 minute. Please save your work or reload the page.");
+                }, sessionTimeoutMs - warningBeforeMs);
+
+                // 🔁 Reload page after session expires
+                setTimeout(() => {
+                    alert("⏰ Session expired. Reloading the page...");
+                    window.location.reload();
+                }, sessionTimeoutMs);
+            </script>
 
   @section('js')
 

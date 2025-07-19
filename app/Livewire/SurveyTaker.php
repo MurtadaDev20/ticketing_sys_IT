@@ -26,11 +26,18 @@ class SurveyTaker extends Component
 
         $existing = Response::where('survey_id', $survey->id)
                         ->where('user_id', Auth::id())
-                        ->where('status', 'completed')
                         ->first();
 
         if ($existing) {
-            session()->flash('error', 'You have already submitted this survey.');
+
+            toastr()->error('You have already submitted this survey.');
+            return redirect()->route('user.surveyViewUser');
+        }
+
+        if($survey->status == 0)
+        {
+            toastr()->error('Sorry The Survey has been closed.');
+            return redirect()->route('user.surveyViewUser');
         }
     }
 
